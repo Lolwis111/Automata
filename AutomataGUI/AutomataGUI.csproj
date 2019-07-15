@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoadSave\Export.cs" />
     <Compile Include="LoadSave\IO.cs" />
     <Compile Include="LoadSave\IOData.cs" />
+    <Compile Include="Model\StateType.cs" />
     <Compile Include="Model\TransitionAlreadyExistsException.cs" />
     <Compile Include="Model\StateAlreadyExistsException.cs" />
     <Compile Include="View\MainWindow.cs">
@@ -59,7 +61,7 @@
     <Compile Include="View\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataManager.cs" />
+    <Compile Include="Model\StateMachine.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

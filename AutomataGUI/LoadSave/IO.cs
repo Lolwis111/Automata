@@ -33,7 +33,7 @@ namespace AutomataGUI.LoadSave
         public static IOData LoadAutomata(string path)
         {
             XmlDocument document = new XmlDocument();
-            DataManager dataManager = new DataManager();
+            StateMachine dataManager = new StateMachine();
 
             document.Load(path);
 
@@ -72,7 +72,7 @@ namespace AutomataGUI.LoadSave
             return new IOData(dataManager, idx, scrollX, scrollY);
         }
 
-        private static void LoadTransitions(DataManager dataManager, XmlNodeList transitionNodes)
+        private static void LoadTransitions(StateMachine dataManager, XmlNodeList transitionNodes)
         {
             foreach (XmlNode transitionNode in transitionNodes)
             {
@@ -105,7 +105,7 @@ namespace AutomataGUI.LoadSave
             }
         }
 
-        private static void LoadStates(DataManager dataManager, XmlNodeList stateNodes)
+        private static void LoadStates(StateMachine dataManager, XmlNodeList stateNodes)
         {
             foreach (XmlNode stateNode in stateNodes)
             {
@@ -128,17 +128,17 @@ namespace AutomataGUI.LoadSave
 
                 string label = SaveSelectSingleNode(stateNode, ".//label").InnerText;
 
-                if (!bool.TryParse(SaveSelectSingleNode(stateNode, ".//start").InnerText, out bool isStartState))
-                {
-                    throw new InvalidDataException($"{Resources.InvalidValue} 'start'!");
-                }
+                //if (!bool.TryParse(SaveSelectSingleNode(stateNode, ".//start").InnerText, out bool isStartState))
+                //{
+                //    throw new InvalidDataException($"{Resources.InvalidValue} 'start'!");
+                //}
 
-                if (!bool.TryParse(SaveSelectSingleNode(stateNode, ".//end").InnerText, out bool isEndState))
-                {
-                    throw new InvalidDataException($"{Resources.InvalidValue} 'end'!");
-                }
+                //if (!bool.TryParse(SaveSelectSingleNode(stateNode, ".//end").InnerText, out bool isEndState))
+                //{
+                //    throw new InvalidDataException($"{Resources.InvalidValue} 'end'!");
+                //}
 
-                dataManager.AddState(id, posX, posY, label, isStartState, isEndState);
+                // dataManager.AddState(id, posX, posY, label, isStartState, isEndState);
             }
         }
 

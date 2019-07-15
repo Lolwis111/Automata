@@ -2,6 +2,7 @@
 
 namespace AutomataGUI.Model
 {
+    [Serializable]
     public class TransitionAlreadyExistsException : Exception
     {
         public TransitionAlreadyExistsException() : base()

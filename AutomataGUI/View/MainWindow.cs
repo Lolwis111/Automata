@@ -14,7 +14,7 @@ namespace AutomataGUI.View
 
         private Drawable _selectedDrawable;
         private State _selectedState;
-        private DataManager _manager = new DataManager();
+        private StateMachine _manager = new StateMachine();
 
         private readonly Random _random = new Random();
 
@@ -299,53 +299,7 @@ namespace AutomataGUI.View
                         _selectedDrawable = null;
                     }
 
-                    float maxX = float.MinValue;
-                    float maxY = float.MinValue;
-                    float minX = float.MaxValue;
-                    float minY = float.MaxValue;
-
-                    foreach (State state in (from d in _manager.Drawables where (d is State) select d))
-                    {
-                        if (state.Rectangle.X < minX)
-                        {
-                            minX = state.Rectangle.X - 5;
-                        }
-
-                        if (state.Rectangle.Y < minY)
-                        {
-                            minY = state.Rectangle.Y - 5;
-                        }
-
-                        if (state.Rectangle.X > maxX)
-                        {
-                            maxX = state.Rectangle.X + 5;
-                        }
-
-                        if (state.Rectangle.Y > maxY)
-                        {
-                            maxY = state.Rectangle.Y + 5;
-                        }
-                    }
-
-                    int width = (int)(maxX - minX) + 100;
-                    int height = (int)(maxY - minY) + 100;
-
-                    using (Bitmap bitmap = new Bitmap(width, height))
-                    {
-                        using (Graphics graphics = Graphics.FromImage(bitmap))
-                        {
-                            graphics.Clear(Color.White);
-
-                            foreach (Drawable drawable in _manager.Drawables)
-                            {
-                                drawable.Draw(graphics, -(int)minX, -(int)minY);
-                            }
-
-                            graphics.Flush();
-                        }
-
-                        bitmap.Save(saveFile.FileName, System.Drawing.Imaging.ImageFormat.Png);
-                    }
+                    Export.ExportAsPng(_manager, saveFile.FileName);
                 }
             }
         }
@@ -394,6 +348,23 @@ namespace AutomataGUI.View
             }
         }
 
+        private void ExportAsLatex_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFile = new SaveFileDialog() { Filter = "Tex Files|*.tex" })
+            {
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                {
+                    if (_selectedDrawable != null)
+                    {
+                        _selectedDrawable.IsSelected = false;
+                        _selectedDrawable = null;
+                    }
+
+                    Export.ExportAsLatex(_manager, saveFile.FileName);
+                }
+            }
+        }
+
         private void HandleImportError()
         {
             _manager.Drawables.Clear();
@@ -433,6 +404,11 @@ namespace AutomataGUI.View
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ReorderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _manager.Reorder();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -481,20 +457,17 @@ namespace AutomataGUI.View
             {
                 case "State":
                 {
-                    state.IsStartState = false;
-                    state.IsEndState = false;
+                    state.Type = StateType.Regular;
                     break;
                 }
                 case "StartState":
                 {
-                    state.IsStartState = true;
-                    state.IsEndState = false;
+                    state.Type = StateType.Start;
                     break;
                 }
                 case "EndState":
                 {
-                    state.IsStartState = false;
-                    state.IsEndState = true;
+                    state.Type = StateType.End;
                     break;
                 }
                 default:

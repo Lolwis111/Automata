@@ -4,7 +4,7 @@ namespace AutomataGUI.LoadSave
 {
     public class IOData
     {
-        public IOData(DataManager manager, int idx, int scrollX, int scrollY)
+        public IOData(StateMachine manager, int idx, int scrollX, int scrollY)
         {
             _manager = manager;
             _idx = idx;
@@ -12,12 +12,12 @@ namespace AutomataGUI.LoadSave
             _scrollY = scrollY;
         }
 
-        public DataManager Manager
+        public StateMachine Manager
         {
             get { return _manager; }
             set { _manager = value; }
         }
-        private DataManager _manager;
+        private StateMachine _manager;
 
         public int IdX
         {

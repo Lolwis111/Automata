@@ -56,7 +56,10 @@ namespace AutomataGUI.Model
                 float dx = Math.Abs(x) * Math.Sign(x);
                 float dy = Math.Abs(y) * Math.Sign(y);
 
-                control1 = (dx > dy) ? new PointF(dx, dy + 30) : new PointF(dx + 30, dy);
+                int sign = StartPoint.Id > EndPoint.Id ? -1 : 1;
+                float offset = sign * 100;
+
+                control1 = (dx > dy) ? new PointF(dx, dy + offset) : new PointF(dx + offset, dy);
 
                 control2 = control1;
             }

@@ -8,19 +8,45 @@ namespace AutomataGUI.Model
     {
         #region Fields
 
+        public StateType Type { get; set; }
+
         public bool IsEndState
         {
-            get { return _isEndState; }
-            set { _isEndState = value; }
+            get
+            {
+                return (Type == StateType.End || Type == StateType.StartEnd);
+            }
+            set
+            {
+                if (value)
+                {
+                    Type |= StateType.End;
+                }
+                else
+                {
+                    Type &= StateType.End;
+                }
+            }
         }
-        private bool _isEndState;
 
         public bool IsStartState
         {
-            get { return _isStartState; }
-            set { _isStartState = value; }
+            get
+            {
+                return (Type == StateType.Start || Type == StateType.StartEnd);
+            }
+            set
+            {
+                if (value)
+                {
+                    Type |= StateType.Start;
+                }
+                else
+                {
+                    Type &= StateType.Start;
+                }
+            }
         }
-        private bool _isStartState;
 
         #endregion
 
@@ -36,7 +62,7 @@ namespace AutomataGUI.Model
 
             graphics.DrawEllipse((_isSelected ? Pens.Red : Pens.Black), newRectangle);
 
-            if (_isEndState)
+            if (IsEndState)
             {
                 graphics.DrawEllipse((_isSelected ? Pens.Red : Pens.Black), 
                     new RectangleF(newRectangle.X + 2, newRectangle.Y + 2,
@@ -52,7 +78,7 @@ namespace AutomataGUI.Model
                 (_isSelected ? Brushes.Red : Brushes.Black), 
                 new PointF(textX, textY));
 
-            if (_isStartState)
+            if (IsStartState)
             {
                 float underlineY = newRectangle.Y + (newRectangle.Height / 2f) + (textSize.Height / 2f);
                 graphics.DrawLine((_isSelected ? Pens.Red : Pens.Black), 
@@ -68,8 +94,9 @@ namespace AutomataGUI.Model
             stringBuilder.AppendLine($"{Statics.Space8}<x>{_rectangle.X}</x>");
             stringBuilder.AppendLine($"{Statics.Space8}<y>{_rectangle.Y}</y>");
             stringBuilder.AppendLine($"{Statics.Space8}<label>{_label}</label>");
-            stringBuilder.AppendLine($"{Statics.Space8}<start>{_isStartState}</start>");
-            stringBuilder.AppendLine($"{Statics.Space8}<end>{_isEndState}</end>");
+            stringBuilder.AppendLine($"{Statics.Space8}<type>{Type}</type>");
+            // stringBuilder.AppendLine($"{Statics.Space8}<start>{IsStartState}</start>");
+            // stringBuilder.AppendLine($"{Statics.Space8}<end>{_isEndState}</end>");
             stringBuilder.AppendLine($"{Statics.Space4}</state>");
 
             return stringBuilder.ToString();

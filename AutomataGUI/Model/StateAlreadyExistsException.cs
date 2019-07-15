@@ -2,6 +2,7 @@
 
 namespace AutomataGUI.Model
 {
+    [Serializable]
     public class StateAlreadyExistsException : Exception
     {
         public StateAlreadyExistsException() : base()

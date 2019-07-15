@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
             "State"}, "(none)", System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
             "EndState"}, "(none)", System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem(new string[] {
             "StartState"}, "(none)", System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem(new string[] {
             "Transition"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +47,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.screenshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logToConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleDebugRenderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,6 +125,7 @@
             this.exportAsLatex.Name = "exportAsLatex";
             this.exportAsLatex.Size = new System.Drawing.Size(134, 22);
             this.exportAsLatex.Text = "LaTeX File";
+            this.exportAsLatex.Click += new System.EventHandler(this.ExportAsLatex_Click);
             // 
             // exportAsPNG
             // 
@@ -156,7 +157,7 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.centerToolStripMenuItem,
-            this.screenshotToolStripMenuItem});
+            this.reorderToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -168,11 +169,12 @@
             this.centerToolStripMenuItem.Text = "center scroll";
             this.centerToolStripMenuItem.Click += new System.EventHandler(this.CenterToolStripMenuItem_Click);
             // 
-            // screenshotToolStripMenuItem
+            // reorderToolStripMenuItem
             // 
-            this.screenshotToolStripMenuItem.Name = "screenshotToolStripMenuItem";
-            this.screenshotToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.screenshotToolStripMenuItem.Text = "screenshot";
+            this.reorderToolStripMenuItem.Name = "reorderToolStripMenuItem";
+            this.reorderToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.reorderToolStripMenuItem.Text = "reorder";
+            this.reorderToolStripMenuItem.Click += new System.EventHandler(this.ReorderToolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
@@ -282,10 +284,10 @@
             // 
             this.toolboxListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolboxListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20});
             this.toolboxListView.LabelEdit = true;
             this.toolboxListView.Location = new System.Drawing.Point(0, 0);
             this.toolboxListView.MultiSelect = false;
@@ -463,10 +465,10 @@
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonApply;
-        private System.Windows.Forms.ToolStripMenuItem screenshotToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logToConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleDebugRenderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAsPNG;
+        private System.Windows.Forms.ToolStripMenuItem reorderToolStripMenuItem;
     }
 }
 
