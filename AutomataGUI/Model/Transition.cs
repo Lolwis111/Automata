@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
@@ -26,6 +27,20 @@ namespace AutomataGUI.Model
             set { _endPoint = value; }
         }
         private State _endPoint;
+
+        public char[] TransitionCharacter
+        {
+            get
+            {
+                List<char> chars = new List<char>();
+                foreach (string label in _label.Split(','))
+                {
+                    chars.Add(label[0]);
+                }
+
+                return chars.ToArray();
+            }
+        }
 
         #endregion
 

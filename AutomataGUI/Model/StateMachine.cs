@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using AutomataGUI.Model.Exceptions;
 
 namespace AutomataGUI.Model
 {
@@ -10,6 +12,10 @@ namespace AutomataGUI.Model
         /// The name of this state machine.
         /// </summary>
         public string Name { get; set; }
+
+        public bool HasStartState { get; set; } = false;
+
+        private State _startState { get; set; }
 
         /// <summary>
         /// This class is used to order the drawables in a way, 
@@ -151,6 +157,11 @@ namespace AutomataGUI.Model
 
                 if (isStartState)
                 {
+                    if (HasStartState)
+                    {
+                        throw new StartStateAlreadyExistsException("This Automaton already contains a start state!");
+                    }
+
                     if (isEndState)
                     {
                         state.Type = StateType.StartEnd;
@@ -159,6 +170,9 @@ namespace AutomataGUI.Model
                     {
                         state.Type = StateType.Start;
                     }
+
+                    HasStartState = true;
+                    _startState = state;
                 }
                 else
                 {
@@ -211,17 +225,66 @@ namespace AutomataGUI.Model
 
             foreach (Transition transition in (from d in Drawables where (d is Transition) select d))
             {
-                if (transition.StartPoint == state)
-                {
-                    result.Add(transition);
-                }
-                else if (transition.EndPoint == state)
+                if (transition.StartPoint == state || transition.EndPoint == state)
                 {
                     result.Add(transition);
                 }
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Returns a list of all transitions a state is connected to.
+        /// </summary>
+        /// <param name="state">The state to query.</param>
+        /// <returns>The list of transitions outgoing from the state.</returns>
+        public List<Transition> FindOutgoingTransitions(State state)
+        {
+            List<Transition> result = new List<Transition>();
+
+            foreach (Transition transition in (from d in Drawables where (d is Transition) select d))
+            {
+                if (transition.StartPoint == state)
+                {
+                    result.Add(transition);
+                }
+            }
+
+            return result;
+        }
+
+        public bool Evaluate(string input)
+        {
+            if (!HasStartState)
+                throw new InvalidAutomataException("The given automaton has no start state!");
+
+            if (input.Length == 0)
+                return _startState.IsEndState;
+
+            State state = _startState;
+
+            foreach(char c in input)
+            {
+                List<Transition> transitions = FindOutgoingTransitions(state);
+
+                bool foundNext = false;
+                foreach (Transition trans in transitions)
+                {
+                    if (trans.TransitionCharacter.Contains(c))
+                    {
+                        state = trans.EndPoint;
+                        foundNext = true;
+                    }
+                }
+
+                if (!foundNext)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

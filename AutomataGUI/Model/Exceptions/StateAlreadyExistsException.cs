@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutomataGUI.Model
+namespace AutomataGUI.Model.Exceptions
 {
     [Serializable]
     public class StateAlreadyExistsException : Exception

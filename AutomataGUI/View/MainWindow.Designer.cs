@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "State"}, "(none)", System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "EndState"}, "(none)", System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "StartState"}, "(none)", System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "Transition"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))));
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +68,8 @@
             this.panelRendering = new System.Windows.Forms.Panel();
             this.horizontalScrollBar = new System.Windows.Forms.HScrollBar();
             this.verticalScrollBar = new System.Windows.Forms.VScrollBar();
+            this.simulateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.mainStatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
@@ -85,7 +87,8 @@
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.debugToolStripMenuItem,
+            this.simulateToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.Size = new System.Drawing.Size(1013, 24);
@@ -110,7 +113,7 @@
             this.exportAsLatex,
             this.exportAsPNG});
             this.exportAsMenu.Name = "exportAsMenu";
-            this.exportAsMenu.Size = new System.Drawing.Size(137, 22);
+            this.exportAsMenu.Size = new System.Drawing.Size(180, 22);
             this.exportAsMenu.Text = "Export as";
             // 
             // exportAsXML
@@ -137,19 +140,19 @@
             // ImportFromXML
             // 
             this.ImportFromXML.Name = "ImportFromXML";
-            this.ImportFromXML.Size = new System.Drawing.Size(137, 22);
+            this.ImportFromXML.Size = new System.Drawing.Size(180, 22);
             this.ImportFromXML.Text = "Import XML";
             this.ImportFromXML.Click += new System.EventHandler(this.ImportFromXML_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -165,14 +168,14 @@
             // centerToolStripMenuItem
             // 
             this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
-            this.centerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.centerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.centerToolStripMenuItem.Text = "center scroll";
             this.centerToolStripMenuItem.Click += new System.EventHandler(this.CenterToolStripMenuItem_Click);
             // 
             // reorderToolStripMenuItem
             // 
             this.reorderToolStripMenuItem.Name = "reorderToolStripMenuItem";
-            this.reorderToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.reorderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reorderToolStripMenuItem.Text = "reorder";
             this.reorderToolStripMenuItem.Click += new System.EventHandler(this.ReorderToolStripMenuItem_Click);
             // 
@@ -226,7 +229,7 @@
             // toolStripStatusLabelTransitionCount
             // 
             this.toolStripStatusLabelTransitionCount.Name = "toolStripStatusLabelTransitionCount";
-            this.toolStripStatusLabelTransitionCount.Size = new System.Drawing.Size(73, 17);
+            this.toolStripStatusLabelTransitionCount.Size = new System.Drawing.Size(72, 17);
             this.toolStripStatusLabelTransitionCount.Text = "0 Transitions";
             // 
             // mainSplitContainer
@@ -283,11 +286,12 @@
             // toolboxListView
             // 
             this.toolboxListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolboxListView.HideSelection = false;
             this.toolboxListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.toolboxListView.LabelEdit = true;
             this.toolboxListView.Location = new System.Drawing.Point(0, 0);
             this.toolboxListView.MultiSelect = false;
@@ -403,6 +407,21 @@
             this.verticalScrollBar.TabIndex = 0;
             this.verticalScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VerticalScrollBar_Scroll);
             // 
+            // simulateToolStripMenuItem
+            // 
+            this.simulateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem});
+            this.simulateToolStripMenuItem.Name = "simulateToolStripMenuItem";
+            this.simulateToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.simulateToolStripMenuItem.Text = "Simulate";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -469,6 +488,8 @@
         private System.Windows.Forms.ToolStripMenuItem toggleDebugRenderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportAsPNG;
         private System.Windows.Forms.ToolStripMenuItem reorderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
     }
 }
 

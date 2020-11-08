@@ -78,7 +78,7 @@ namespace Automata
                 {
                     foreach (string name in state.Conditions.Values)
                     {
-                        var a = from c in states where c.Name == name select c;
+                        IEnumerable<State> a = from c in states where c.Name == name select c;
                         if (a.Count() <= 0)
                             throw new Exception("Automat ist Fehlerhaft!");
                     }

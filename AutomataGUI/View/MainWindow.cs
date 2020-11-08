@@ -665,5 +665,11 @@ namespace AutomataGUI.View
         }
 
         #endregion
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SimulateWindow window = new SimulateWindow(_manager);
+            window.Show();
+        }
     }
 }
