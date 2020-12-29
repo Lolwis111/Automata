@@ -20,11 +20,31 @@ namespace AutomataGUI.Model
             {
                 if (value)
                 {
-                    Type |= StateType.End;
+                    switch (Type)
+                    {
+                        case StateType.End:
+                        case StateType.Regular:
+                            Type = StateType.End;
+                            break;
+                        case StateType.Start:
+                        case StateType.StartEnd:
+                            Type = StateType.StartEnd;
+                            break;
+                    }
                 }
                 else
                 {
-                    Type &= StateType.End;
+                    switch (Type)
+                    {
+                        case StateType.End:
+                        case StateType.Regular:
+                            Type = StateType.Regular;
+                            break;
+                        case StateType.Start:
+                        case StateType.StartEnd:
+                            Type = StateType.Start;
+                            break;
+                    }
                 }
             }
         }
@@ -39,11 +59,30 @@ namespace AutomataGUI.Model
             {
                 if (value)
                 {
-                    Type |= StateType.Start;
+                    switch (Type)
+                    {
+                        case StateType.End:
+                        case StateType.StartEnd:
+                            Type = StateType.StartEnd;
+                            break;
+                        case StateType.Regular:
+                            Type = StateType.Start;
+                            break;
+                    }
                 }
                 else
                 {
-                    Type &= StateType.Start;
+                    switch (Type)
+                    {
+                        case StateType.End:
+                        case StateType.StartEnd:
+                            Type = StateType.End;
+                            break;
+                        case StateType.Regular:
+                        case StateType.Start:
+                            Type = StateType.Regular;
+                            break;
+                    }
                 }
             }
         }
@@ -54,17 +93,17 @@ namespace AutomataGUI.Model
 
         public override void Draw(Graphics graphics, int scrollOffsetX, int scrollOffsetY)
         {
-            RectangleF newRectangle = _rectangle;
+            RectangleF newRectangle = Rectangle;
             newRectangle.X += scrollOffsetX;
             newRectangle.Y += scrollOffsetY;
 
             graphics.FillEllipse(Brushes.White, newRectangle);
 
-            graphics.DrawEllipse((_isSelected ? Pens.Red : Pens.Black), newRectangle);
+            graphics.DrawEllipse((IsSelected ? Pens.Red : Pens.Black), newRectangle);
 
             if (IsEndState)
             {
-                graphics.DrawEllipse((_isSelected ? Pens.Red : Pens.Black), 
+                graphics.DrawEllipse((IsSelected ? Pens.Red : Pens.Black), 
                     new RectangleF(newRectangle.X + 2, newRectangle.Y + 2,
                     newRectangle.Width - 4, newRectangle.Height - 4));
             }
@@ -75,13 +114,13 @@ namespace AutomataGUI.Model
             float textY = newRectangle.Y + (newRectangle.Height / 2f) - (textSize.Height / 2f);
 
             graphics.DrawString(_label, _controlFont, 
-                (_isSelected ? Brushes.Red : Brushes.Black), 
+                (IsSelected ? Brushes.Red : Brushes.Black), 
                 new PointF(textX, textY));
 
             if (IsStartState)
             {
                 float underlineY = newRectangle.Y + (newRectangle.Height / 2f) + (textSize.Height / 2f);
-                graphics.DrawLine((_isSelected ? Pens.Red : Pens.Black), 
+                graphics.DrawLine((IsSelected ? Pens.Red : Pens.Black), 
                     textX, underlineY, textX + textSize.Width - 1, underlineY);
             }
         }
@@ -91,15 +130,23 @@ namespace AutomataGUI.Model
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"{Statics.Space4}<state>");
             stringBuilder.AppendLine($"{Statics.Space8}<id>{_id}</id>");
-            stringBuilder.AppendLine($"{Statics.Space8}<x>{_rectangle.X}</x>");
-            stringBuilder.AppendLine($"{Statics.Space8}<y>{_rectangle.Y}</y>");
+            stringBuilder.AppendLine($"{Statics.Space8}<x>{Rectangle.X}</x>");
+            stringBuilder.AppendLine($"{Statics.Space8}<y>{Rectangle.Y}</y>");
             stringBuilder.AppendLine($"{Statics.Space8}<label>{_label}</label>");
             stringBuilder.AppendLine($"{Statics.Space8}<type>{Type}</type>");
-            // stringBuilder.AppendLine($"{Statics.Space8}<start>{IsStartState}</start>");
-            // stringBuilder.AppendLine($"{Statics.Space8}<end>{_isEndState}</end>");
             stringBuilder.AppendLine($"{Statics.Space4}</state>");
 
             return stringBuilder.ToString();
+        }
+
+        public override PointF GetMaximum()
+        {
+            return Center + Rectangle.Size;
+        }
+
+        public override PointF GetMinimum()
+        {
+            return Center - Rectangle.Size;
         }
 
         public void MouseMove(Point position, MouseButtons mouseButtons)

@@ -13,9 +13,29 @@ namespace AutomataGUI.Model
         /// </summary>
         public string Name { get; set; }
 
+        public State StartState
+        {
+            get
+            {
+                return _startState;
+            }
+            set
+            {
+                if (HasStartState)
+                {
+                    throw new StartStateAlreadyExistsException();
+                }
+                else
+                {
+                    HasStartState = true;
+                    _startState = value;
+                }
+            }
+        }
+
         public bool HasStartState { get; set; } = false;
 
-        private State _startState { get; set; }
+        private State _startState { get; set; } = null;
 
         /// <summary>
         /// This class is used to order the drawables in a way, 
@@ -34,8 +54,8 @@ namespace AutomataGUI.Model
 
                 if (x is Transition)
                 {
-                    if (x is State) return -1;
-                    return 0;
+                    if (y is Transition) return 0;
+                    return -1;
                 }
 
                 return 0;
@@ -44,26 +64,27 @@ namespace AutomataGUI.Model
 
         public StateMachine()
         {
-            _drawables.Clear();
+            Drawables.Clear();
         }
 
+        /// <summary>
+        ///  Reoders the drawables so that states overlap transitions
+        /// </summary>
         public void Reorder()
         {
             Drawables.Sort(new ZLevelComparator());
         }
 
-        public List<Drawable> Drawables
-        {
-            get { return _drawables; }
-            set { _drawables = value; }
-        }
-        private List<Drawable> _drawables = new List<Drawable>();
+        /// <summary>
+        /// All the states and transitions
+        /// </summary>
+        public List<Drawable> Drawables { get; set; } = new List<Drawable>();
 
         public int StateCount
         {
             get
             {
-                return _drawables.Count(x => (x is State));
+                return Drawables.Count(x => (x is State));
             }
         }
 
@@ -71,14 +92,23 @@ namespace AutomataGUI.Model
         {
             get
             {
-                return _drawables.Count(x => (x is Transition));
+                return Drawables.Count(x => (x is Transition));
             }
         }
 
+        /// <summary>
+        /// Add a transition between the two given states.
+        /// If a transition already exists a TransitionAlreadyExistsException is thrown.
+        /// </summary>
+        /// <param name="start">State to transition from</param>
+        /// <param name="end">State to transition to</param>
+        /// <param name="id">ID to give the transition</param>
+        /// <param name="label">The label (determines how to transition)</param>
+        /// <exception cref="TransitionAlreadyExistsException"></exception>
         public void AddTransition(State start, State end, int id, string label)
         {
             // check if this transition already exists
-            if (!_drawables.Exists(x => ((x is Transition t) &&
+            if (!Drawables.Exists(x => ((x is Transition t) &&
                     (((t.StartPoint.Id == start.Id) && (t.EndPoint.Id == end.Id)) || (t.Id == id)))))
             {
                 Transition transition = new Transition
@@ -87,12 +117,12 @@ namespace AutomataGUI.Model
                     StartPoint = start,
                     EndPoint = end,
                     Label = label,
-                    Z = _drawables.Count + 1
+                    Z = Drawables.Count + 1
                 };
 
-                _drawables.Add(transition);
+                Drawables.Add(transition);
 
-                _drawables.Sort((x, y) => (y.Z - x.Z));
+                Drawables.Sort((x, y) => (y.Z - x.Z));
             }
             else
             {
@@ -100,16 +130,46 @@ namespace AutomataGUI.Model
             }
         }
 
+        /// <summary>
+        /// Add a transition between the two given states.
+        /// If a transition already exists a TransitionAlreadyExistsException is thrown.
+        /// The label is assigned randomly.
+        /// </summary>
+        /// <param name="start">State to transition from</param>
+        /// <param name="end">State to transition to</param>
+        /// <param name="id">ID to give the transition</param>
+        /// <exception cref="TransitionAlreadyExistsException"></exception>
         public void AddTransition(State start, State end, int id)
         {
             AddTransition(start, end, id, Statics.Random.Next().ToString());
         }
 
+        /// <summary>
+        /// Adds a new state to the automaton at the specified position
+        /// and with the specified label and properties.
+        /// States that already exist can't be added.
+        /// </summary>
+        /// <param name="id">ID of the state</param>
+        /// <param name="posX">X coordinate of state (drawing)</param>
+        /// <param name="posY">Y coordinate of state (drawing)</param>
+        /// <param name="state">State which to copy label and type from</param>
+        /// <exception cref="StateAlreadyExistsException"></exception>
         public void AddState(int id, int posX, int posY, State state)
         {
             AddState(id, posX, posY, state.Label, state.Type);
         }
 
+        /// <summary>
+        /// Adds a new state to the automaton at the specified position
+        /// and with the specified label and properties.
+        /// States that already exist can't be added.
+        /// </summary>
+        /// <param name="id">ID of the state</param>
+        /// <param name="posX">X coordinate of state (drawing)</param>
+        /// <param name="posY">Y coordinate of state (drawing)</param>
+        /// <param name="label">The label of the state</param>
+        /// <param name="stateType">Type of the state</param>
+        /// <exception cref="StateAlreadyExistsException"></exception>
         public void AddState(int id, int posX, int posY, string label, StateType stateType)
         {
             switch (stateType)
@@ -144,7 +204,7 @@ namespace AutomataGUI.Model
         public void AddState(int id, int posX, int posY, string label, bool isStartState, bool isEndState)
         {
             // check if a state with given id already exists
-            if (!_drawables.Exists(x => ((x is State s) && (s.Id == id))))
+            if (!Drawables.Exists(x => ((x is State s) && (s.Id == id))))
             {
                 State state = new State
                 {
@@ -186,9 +246,9 @@ namespace AutomataGUI.Model
                     }
                 }
 
-                _drawables.Add(state);
+                Drawables.Add(state);
 
-                _drawables.Sort((x, y) => (y.Z - x.Z));
+                Drawables.Sort((x, y) => (y.Z - x.Z));
             }
             else
             {
@@ -254,37 +314,69 @@ namespace AutomataGUI.Model
             return result;
         }
 
+        public List<Transition> FindIngoingTransitions(State state)
+        {
+            List<Transition> result = new List<Transition>();
+
+            foreach (Transition transition in (from d in Drawables where (d is Transition) select d))
+            {
+                if (transition.EndPoint == state)
+                {
+                    result.Add(transition);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Tests if the given input string gets accepted by
+        /// the language that the automaton represents.
+        /// </summary>
+        /// <param name="input">The string to test.</param>
+        /// <returns>Boolean of wether or not it was accepted.</returns>
         public bool Evaluate(string input)
         {
+            // check if start state is given
             if (!HasStartState)
                 throw new InvalidAutomataException("The given automaton has no start state!");
 
+            // if input is empty we check if the start state is an end state
             if (input.Length == 0)
                 return _startState.IsEndState;
 
+
+            // start 
             State state = _startState;
 
+            // process each character
             foreach(char c in input)
             {
+                // get all transitions from the current state
                 List<Transition> transitions = FindOutgoingTransitions(state);
 
                 bool foundNext = false;
+                // and find a transition that matches the character
                 foreach (Transition trans in transitions)
                 {
                     if (trans.TransitionCharacter.Contains(c))
                     {
+                        // if one is find we transition to the next state
                         state = trans.EndPoint;
                         foundNext = true;
+                        break;
                     }
                 }
 
+                // if no next one is found the word is not accepted
                 if (!foundNext)
                 {
                     return false;
                 }
             }
 
-            return true;
+            // accept if we end on an end state
+            return state.IsEndState;
         }
     }
 }

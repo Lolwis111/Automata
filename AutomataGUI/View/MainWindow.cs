@@ -5,6 +5,9 @@ using System.Linq;
 using AutomataGUI.Model;
 using AutomataGUI.Properties;
 using AutomataGUI.LoadSave;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using AutomataGUI.Model.Exceptions;
 
 namespace AutomataGUI.View
 {
@@ -49,33 +52,40 @@ namespace AutomataGUI.View
 
         private void ToolboxListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (toolboxListView.SelectedItems.Count == 0) return;
-
-            if (toolboxListView.SelectedItems[0].Text == @"Transition")
+            try
             {
-                _transitionMode = true;
-                toolStripStatusLabelLeft.Text = Resources.StatusTransitionMode;
-                Cursor = Cursors.Cross;
+                if (toolboxListView.SelectedItems.Count == 0) return;
 
-                return;
+                if (toolboxListView.SelectedItems[0].Text == @"Transition")
+                {
+                    _transitionMode = true;
+                    toolStripStatusLabelLeft.Text = Resources.StatusTransitionMode;
+                    Cursor = Cursors.Cross;
+
+                    return;
+                }
+
+                State newState = new State
+                {
+                    Id = _idx,
+                    Label = _idx.ToString()
+                };
+                SetStateParameters(newState);
+
+                int pos = 100 + (_idx * 20);
+
+                _manager.AddState(_idx, pos, pos, newState);
+
+                panelRendering.Invalidate();
+
+                _idx++;
+
+                UpdateStatusBar();
             }
-
-            State newState = new State
+            catch (StartStateAlreadyExistsException sae)
             {
-                Id = _idx,
-                Label = _idx.ToString()
-            };
-            SetStateParameters(newState);
-
-            int pos = 100 + (_idx * 20);
-
-            _manager.AddState(_idx, pos, pos, newState);
-
-            panelRendering.Invalidate();
-
-            _idx++;
-
-            UpdateStatusBar();
+                MessageBox.Show(sae.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }        
 
         private void TextBoxLabel_KeyDown(object sender, KeyEventArgs e)
@@ -98,8 +108,6 @@ namespace AutomataGUI.View
 
         private void PanelRendering_MouseDown(object sender, MouseEventArgs e)
         {
-            // _mouseClick = e.Location;
-
             if (_selectedDrawable != null)
             {
                 _selectedDrawable.IsSelected = false;
@@ -133,13 +141,21 @@ namespace AutomataGUI.View
                         }
                         else
                         {
-                            _manager.AddTransition(_selectedState, state, _idx);
-                            _idx++;
+                            try
+                            {
+                                _manager.AddTransition(_selectedState, state, _idx);
 
-                            _selectedState = null;
-                            _transitionMode = false;
-                            toolStripStatusLabelLeft.Text = Resources.StatusReady;
-                            Cursor = Cursors.Arrow;
+                                _idx++;
+
+                                _selectedState = null;
+                                _transitionMode = false;
+                                toolStripStatusLabelLeft.Text = Resources.StatusReady;
+                                Cursor = Cursors.Arrow;
+                            }
+                            catch (TransitionAlreadyExistsException tae)
+                            {
+                                MessageBox.Show(tae.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                     else
@@ -317,28 +333,35 @@ namespace AutomataGUI.View
 
         private void ImportFromXML_Click(object sender, EventArgs e)
         {
-            try
+            _manager.Drawables.Clear();
+            DisableStateSettings();
+            DisableTransitionSettings();
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog { Filter = @"XML Files|*.xml" })
             {
-                _manager.Drawables.Clear();
-                DisableStateSettings();
-                DisableTransitionSettings();
-
-                using (OpenFileDialog openFileDialog = new OpenFileDialog { Filter = @"XML Files|*.xml" })
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
                 {
-                    if (openFileDialog.ShowDialog() != DialogResult.OK)
-                    {
-                        return;
-                    }
-
-                    IOData data = IO.LoadAutomata(openFileDialog.FileName);
-
-                    _manager = data.Manager;
-                    horizontalScrollBar.Value = data.ScrollX;
-                    verticalScrollBar.Value = data.ScrollY;
-                    _idx = data.IdX;
+                    return;
                 }
 
+                toolStripStatusLabelLeft.Text = "Loading...";
+                System.Threading.ThreadPool.QueueUserWorkItem(LoadAsync, openFileDialog.FileName);                    
+            }
+        }
+
+        private void LoadAsync(object path)
+        {
+            try
+            {
+                IOData data = IO.LoadAutomata((string)path);
+                _manager = data.Manager;
+                horizontalScrollBar.Value = data.ScrollX;
+                verticalScrollBar.Value = data.ScrollY;
+                _idx = data.IdX;
+
                 panelRendering.Invalidate();
+
+                toolStripStatusLabelLeft.Text = "ready";
             }
             catch (Exception ex)
             {
@@ -441,6 +464,15 @@ namespace AutomataGUI.View
                 case Keys.Down:
                 {
                     ScrollVertical(Direction.Increment);
+                    break;
+                }
+                case Keys.Delete:
+                {
+                    if (buttonDelete.Enabled)
+                    {
+                        ButtonDelete_Click(this, null);
+                    }
+
                     break;
                 }
                 default:
@@ -615,10 +647,35 @@ namespace AutomataGUI.View
                 state.Label = textBoxLabel.Text;
                 state.IsStartState = checkBoxStart.Checked;
                 state.IsEndState = checkBoxEnd.Checked;
+
+                if (state.IsStartState)
+                {
+                    if (_manager.HasStartState)
+                    {
+                        MessageBox.Show(Resources.StartStateExistsError, "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        state.IsStartState = false;
+                        checkBoxStart.Checked = false;
+                    }
+                    else
+                    {
+                        _manager.StartState = state;
+                    }
+                }
             }
             else if (_selectedDrawable is Transition transition)
             {
-                transition.Label = textBoxLabel.Text;
+                string[] segments = textBoxLabel.Text.Split(',');
+
+                if (!segments.All(x => x.Length == 1))
+                {
+                    MessageBox.Show(Resources.InvalidValue + " 'Label'!", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    transition.Label = textBoxLabel.Text;
+                }
             }
 
             panelRendering.Invalidate();
@@ -644,6 +701,11 @@ namespace AutomataGUI.View
             {
                 DisableStateSettings();
 
+                if ((_selectedDrawable as State).IsStartState)
+                {
+                    _manager.HasStartState = false;
+                }
+
                 foreach (Transition transition in _manager.FindTransitions(state))
                 {
                     _manager.Drawables.Remove(transition);
@@ -664,12 +726,12 @@ namespace AutomataGUI.View
             panelRendering.Invalidate();
         }
 
-        #endregion
-
-        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SimulateWindow window = new SimulateWindow(_manager);
             window.Show();
         }
+
+        #endregion
     }
 }

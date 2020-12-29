@@ -34,7 +34,7 @@ namespace AutomataGUI.LoadSave
         {
             XmlDocument document = new XmlDocument();
             StateMachine dataManager = new StateMachine();
-
+            
             document.Load(path);
 
             if (!int.TryParse(document.SelectSingleNode(".//idx")?.InnerText, out int idx))
@@ -128,18 +128,44 @@ namespace AutomataGUI.LoadSave
 
                 string label = SaveSelectSingleNode(stateNode, ".//label").InnerText;
 
-                //if (!bool.TryParse(SaveSelectSingleNode(stateNode, ".//start").InnerText, out bool isStartState))
-                //{
-                //    throw new InvalidDataException($"{Resources.InvalidValue} 'start'!");
-                //}
+                StateType stateType = ParseType(SaveSelectSingleNode(stateNode, ".//type").InnerText);
 
-                //if (!bool.TryParse(SaveSelectSingleNode(stateNode, ".//end").InnerText, out bool isEndState))
-                //{
-                //    throw new InvalidDataException($"{Resources.InvalidValue} 'end'!");
-                //}
-
-                // dataManager.AddState(id, posX, posY, label, isStartState, isEndState);
+                dataManager.AddState(id, posX, posY, label, stateType);
             }
+        }
+
+        private static StateType ParseType(string type)
+        {
+            StateType stateType = StateType.Regular;
+            switch (type)
+            {
+                case "Regular":
+                {
+                    stateType = StateType.Regular;
+                    break;
+                }
+                case "Start":
+                {
+                    stateType = StateType.Start;
+                    break;
+                }
+                case "End":
+                {
+                    stateType = StateType.End;
+                    break;
+                }
+                case "StartEnd":
+                {
+                    stateType = StateType.StartEnd;
+                    break;
+                }
+                default:
+                {
+                    throw new FormatException(Resources.CorruptedSavefileError);
+                }
+            }
+
+            return stateType;
         }
 
         private static XmlNode SaveSelectSingleNode(XmlNode root, string xpath)

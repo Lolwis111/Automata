@@ -28,12 +28,7 @@ namespace AutomataGUI.Model
         }
         protected string _label;
 
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set { _isSelected = value; }
-        }
-        protected bool _isSelected = false;
+        public bool IsSelected { get; set; }
 
         protected readonly Font _controlFont = new Font("Arial", 8);
 
@@ -67,22 +62,11 @@ namespace AutomataGUI.Model
             Dispose(true);
         }
 
-        public RectangleF Rectangle
-        {
-            get
-            {
-                return _rectangle;
-            }
-            set
-            {
-                _rectangle = value;
-            }
-        }
-        protected RectangleF _rectangle;
+        public RectangleF Rectangle { get; set; }
 
         public PointF Center
         {
-            get { return new PointF(_rectangle.X + (_rectangle.Width / 2), _rectangle.Y + (_rectangle.Height / 2)); }
+            get { return new PointF(Rectangle.X + (Rectangle.Width / 2), Rectangle.Y + (Rectangle.Height / 2)); }
         }
 
         public override bool Equals(object obj)
@@ -99,6 +83,9 @@ namespace AutomataGUI.Model
         {
             return _id;
         }
+
+        public abstract PointF GetMaximum();
+        public abstract PointF GetMinimum();
 
         #endregion
     }

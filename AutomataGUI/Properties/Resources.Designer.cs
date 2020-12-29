@@ -106,6 +106,15 @@ namespace AutomataGUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This automaton already has a start state! Only one start state is allowed!.
+        /// </summary>
+        internal static string StartStateExistsError {
+            get {
+                return ResourceManager.GetString("StartStateExistsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ready.
         /// </summary>
         internal static string StatusReady {

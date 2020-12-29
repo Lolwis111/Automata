@@ -51,6 +51,8 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logToConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleDebugRenderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelLeft = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelStateCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -68,8 +70,6 @@
             this.panelRendering = new System.Windows.Forms.Panel();
             this.horizontalScrollBar = new System.Windows.Forms.HScrollBar();
             this.verticalScrollBar = new System.Windows.Forms.VScrollBar();
-            this.simulateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.mainStatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
@@ -91,7 +91,7 @@
             this.simulateToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(1013, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(1011, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "mainMenuStrip";
             // 
@@ -113,7 +113,7 @@
             this.exportAsLatex,
             this.exportAsPNG});
             this.exportAsMenu.Name = "exportAsMenu";
-            this.exportAsMenu.Size = new System.Drawing.Size(180, 22);
+            this.exportAsMenu.Size = new System.Drawing.Size(137, 22);
             this.exportAsMenu.Text = "Export as";
             // 
             // exportAsXML
@@ -140,19 +140,19 @@
             // ImportFromXML
             // 
             this.ImportFromXML.Name = "ImportFromXML";
-            this.ImportFromXML.Size = new System.Drawing.Size(180, 22);
+            this.ImportFromXML.Size = new System.Drawing.Size(137, 22);
             this.ImportFromXML.Text = "Import XML";
             this.ImportFromXML.Click += new System.EventHandler(this.ImportFromXML_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -168,14 +168,14 @@
             // centerToolStripMenuItem
             // 
             this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
-            this.centerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.centerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.centerToolStripMenuItem.Text = "center scroll";
             this.centerToolStripMenuItem.Click += new System.EventHandler(this.CenterToolStripMenuItem_Click);
             // 
             // reorderToolStripMenuItem
             // 
             this.reorderToolStripMenuItem.Name = "reorderToolStripMenuItem";
-            this.reorderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reorderToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.reorderToolStripMenuItem.Text = "reorder";
             this.reorderToolStripMenuItem.Click += new System.EventHandler(this.ReorderToolStripMenuItem_Click);
             // 
@@ -202,15 +202,30 @@
             this.toggleDebugRenderToolStripMenuItem.Text = "toggle debug render";
             this.toggleDebugRenderToolStripMenuItem.Click += new System.EventHandler(this.ToggleDebugRenderToolStripMenuItem_Click);
             // 
+            // simulateToolStripMenuItem
+            // 
+            this.simulateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem});
+            this.simulateToolStripMenuItem.Name = "simulateToolStripMenuItem";
+            this.simulateToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.simulateToolStripMenuItem.Text = "Simulate";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.StartToolStripMenuItem_Click);
+            // 
             // mainStatusStrip
             // 
             this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelLeft,
             this.toolStripStatusLabelStateCount,
             this.toolStripStatusLabelTransitionCount});
-            this.mainStatusStrip.Location = new System.Drawing.Point(0, 577);
+            this.mainStatusStrip.Location = new System.Drawing.Point(0, 591);
             this.mainStatusStrip.Name = "mainStatusStrip";
-            this.mainStatusStrip.Size = new System.Drawing.Size(1013, 22);
+            this.mainStatusStrip.Size = new System.Drawing.Size(1011, 22);
             this.mainStatusStrip.TabIndex = 1;
             this.mainStatusStrip.Text = "mainStatusStrip";
             // 
@@ -252,7 +267,7 @@
             this.mainSplitContainer.Panel2.Controls.Add(this.verticalScrollBar);
             this.mainSplitContainer.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.mainSplitContainer.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.mainSplitContainer.Size = new System.Drawing.Size(1013, 553);
+            this.mainSplitContainer.Size = new System.Drawing.Size(1011, 567);
             this.mainSplitContainer.SplitterDistance = 180;
             this.mainSplitContainer.TabIndex = 2;
             // 
@@ -279,8 +294,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.textBoxLabel);
             this.splitContainer1.Panel2.Controls.Add(this.labelLabel);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(180, 553);
-            this.splitContainer1.SplitterDistance = 333;
+            this.splitContainer1.Size = new System.Drawing.Size(180, 567);
+            this.splitContainer1.SplitterDistance = 341;
             this.splitContainer1.TabIndex = 0;
             // 
             // toolboxListView
@@ -296,7 +311,7 @@
             this.toolboxListView.Location = new System.Drawing.Point(0, 0);
             this.toolboxListView.MultiSelect = false;
             this.toolboxListView.Name = "toolboxListView";
-            this.toolboxListView.Size = new System.Drawing.Size(180, 333);
+            this.toolboxListView.Size = new System.Drawing.Size(180, 341);
             this.toolboxListView.TabIndex = 1;
             this.toolboxListView.UseCompatibleStateImageBehavior = false;
             this.toolboxListView.View = System.Windows.Forms.View.Tile;
@@ -305,7 +320,9 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(12, 163);
+            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDelete.Location = new System.Drawing.Point(12, 182);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(152, 23);
             this.buttonDelete.TabIndex = 6;
@@ -315,7 +332,9 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(12, 134);
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Location = new System.Drawing.Point(12, 153);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(152, 23);
             this.buttonCancel.TabIndex = 5;
@@ -325,7 +344,9 @@
             // 
             // buttonApply
             // 
-            this.buttonApply.Location = new System.Drawing.Point(12, 105);
+            this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonApply.Location = new System.Drawing.Point(12, 124);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(152, 23);
             this.buttonApply.TabIndex = 4;
@@ -335,6 +356,8 @@
             // 
             // checkBoxEnd
             // 
+            this.checkBoxEnd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEnd.AutoSize = true;
             this.checkBoxEnd.Location = new System.Drawing.Point(54, 55);
             this.checkBoxEnd.Name = "checkBoxEnd";
@@ -345,6 +368,8 @@
             // 
             // checkBoxStart
             // 
+            this.checkBoxStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxStart.AutoSize = true;
             this.checkBoxStart.Location = new System.Drawing.Point(54, 32);
             this.checkBoxStart.Name = "checkBoxStart";
@@ -376,7 +401,7 @@
             this.panelRendering.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRendering.Location = new System.Drawing.Point(0, 0);
             this.panelRendering.Name = "panelRendering";
-            this.panelRendering.Size = new System.Drawing.Size(812, 536);
+            this.panelRendering.Size = new System.Drawing.Size(810, 550);
             this.panelRendering.TabIndex = 2;
             this.panelRendering.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelRendering_Paint);
             this.panelRendering.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelRendering_MouseDown);
@@ -387,11 +412,11 @@
             // 
             this.horizontalScrollBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.horizontalScrollBar.Enabled = false;
-            this.horizontalScrollBar.Location = new System.Drawing.Point(0, 536);
+            this.horizontalScrollBar.Location = new System.Drawing.Point(0, 550);
             this.horizontalScrollBar.Maximum = 200;
             this.horizontalScrollBar.Minimum = -200;
             this.horizontalScrollBar.Name = "horizontalScrollBar";
-            this.horizontalScrollBar.Size = new System.Drawing.Size(812, 17);
+            this.horizontalScrollBar.Size = new System.Drawing.Size(810, 17);
             this.horizontalScrollBar.TabIndex = 1;
             this.horizontalScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HorizontalScrollBar_Scroll);
             // 
@@ -399,34 +424,19 @@
             // 
             this.verticalScrollBar.Dock = System.Windows.Forms.DockStyle.Right;
             this.verticalScrollBar.Enabled = false;
-            this.verticalScrollBar.Location = new System.Drawing.Point(812, 0);
+            this.verticalScrollBar.Location = new System.Drawing.Point(810, 0);
             this.verticalScrollBar.Maximum = 200;
             this.verticalScrollBar.Minimum = -200;
             this.verticalScrollBar.Name = "verticalScrollBar";
-            this.verticalScrollBar.Size = new System.Drawing.Size(17, 553);
+            this.verticalScrollBar.Size = new System.Drawing.Size(17, 567);
             this.verticalScrollBar.TabIndex = 0;
             this.verticalScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VerticalScrollBar_Scroll);
-            // 
-            // simulateToolStripMenuItem
-            // 
-            this.simulateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem});
-            this.simulateToolStripMenuItem.Name = "simulateToolStripMenuItem";
-            this.simulateToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.simulateToolStripMenuItem.Text = "Simulate";
-            // 
-            // startToolStripMenuItem
-            // 
-            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.startToolStripMenuItem.Text = "Start";
-            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1013, 599);
+            this.ClientSize = new System.Drawing.Size(1011, 613);
             this.Controls.Add(this.mainSplitContainer);
             this.Controls.Add(this.mainStatusStrip);
             this.Controls.Add(this.mainMenuStrip);

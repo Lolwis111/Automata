@@ -32,6 +32,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSimulate = new System.Windows.Forms.Button();
             this.labelResult = new System.Windows.Forms.Label();
+            this.buttonClear = new System.Windows.Forms.Button();
+            this.listViewResults = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // textBoxWord
@@ -40,7 +44,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxWord.Location = new System.Drawing.Point(53, 12);
             this.textBoxWord.Name = "textBoxWord";
-            this.textBoxWord.Size = new System.Drawing.Size(181, 20);
+            this.textBoxWord.Size = new System.Drawing.Size(288, 20);
             this.textBoxWord.TabIndex = 0;
             // 
             // label1
@@ -56,9 +60,9 @@
             // 
             this.buttonSimulate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSimulate.Location = new System.Drawing.Point(15, 89);
+            this.buttonSimulate.Location = new System.Drawing.Point(15, 306);
             this.buttonSimulate.Name = "buttonSimulate";
-            this.buttonSimulate.Size = new System.Drawing.Size(219, 23);
+            this.buttonSimulate.Size = new System.Drawing.Size(326, 23);
             this.buttonSimulate.TabIndex = 2;
             this.buttonSimulate.Text = "Simulate";
             this.buttonSimulate.UseVisualStyleBackColor = true;
@@ -75,11 +79,54 @@
             this.labelResult.TabIndex = 3;
             this.labelResult.Text = "Result:";
             // 
+            // buttonClear
+            // 
+            this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClear.Location = new System.Drawing.Point(15, 277);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(326, 23);
+            this.buttonClear.TabIndex = 4;
+            this.buttonClear.Text = "Clear list";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.ButtonClear_Click);
+            // 
+            // listViewResults
+            // 
+            this.listViewResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listViewResults.FullRowSelect = true;
+            this.listViewResults.GridLines = true;
+            this.listViewResults.HideSelection = false;
+            this.listViewResults.Location = new System.Drawing.Point(15, 103);
+            this.listViewResults.MultiSelect = false;
+            this.listViewResults.Name = "listViewResults";
+            this.listViewResults.Size = new System.Drawing.Size(326, 168);
+            this.listViewResults.TabIndex = 5;
+            this.listViewResults.UseCompatibleStateImageBehavior = false;
+            this.listViewResults.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Word";
+            this.columnHeader1.Width = 224;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Accepted";
+            this.columnHeader2.Width = 97;
+            // 
             // SimulateWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(247, 123);
+            this.ClientSize = new System.Drawing.Size(354, 340);
+            this.Controls.Add(this.listViewResults);
+            this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.labelResult);
             this.Controls.Add(this.buttonSimulate);
             this.Controls.Add(this.label1);
@@ -100,5 +147,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonSimulate;
         private System.Windows.Forms.Label labelResult;
+        private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.ListView listViewResults;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }

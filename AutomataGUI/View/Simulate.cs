@@ -35,17 +35,21 @@ namespace AutomataGUI.View
                 {
                     labelResult.Text += $"'{word}' was accepted.";
                     labelResult.ForeColor = System.Drawing.Color.Green;
+                    listViewResults.Items.Add(new ListViewItem(new string[] { word, "Yes" }));
                 }
                 else
                 {
                     labelResult.Text += $"'{word}' was not accepted.";
                     labelResult.ForeColor = System.Drawing.Color.Red;
+                    listViewResults.Items.Add(new ListViewItem(new string[] { word, "No" }));
                 }
             }
             catch(Exception ex)
             {
                 labelResult.Text = $"Exception: {ex.Message}";
                 labelResult.ForeColor = System.Drawing.Color.Red;
+
+                listViewResults.Items.Add(new ListViewItem(new string[] { word, "Exception" }));
             }
         }
 
@@ -53,6 +57,11 @@ namespace AutomataGUI.View
         {
 
             labelResult.MaximumSize = new System.Drawing.Size(Size.Width - 50, 0);
+        }
+
+        private void ButtonClear_Click(object sender, EventArgs e)
+        {
+            listViewResults.Items.Clear();
         }
     }
 }

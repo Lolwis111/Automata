@@ -132,6 +132,9 @@
   <data name="InvalidValue" xml:space="preserve">
     <value>Invalid value for</value>
   </data>
+  <data name="StartStateExistsError" xml:space="preserve">
+    <value>This automaton already has a start state! Only one start state is allowed!</value>
+  </data>
   <data name="StatusReady" xml:space="preserve">
     <value>ready</value>
   </data>

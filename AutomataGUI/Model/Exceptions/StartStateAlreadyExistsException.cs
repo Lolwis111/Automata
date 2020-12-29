@@ -2,6 +2,7 @@
 
 namespace AutomataGUI.Model.Exceptions
 {
+    [Serializable]
     public class StartStateAlreadyExistsException : Exception
     {
         public StartStateAlreadyExistsException() : base()

@@ -14,26 +14,29 @@ namespace AutomataGUI.LoadSave
             float minX = float.MaxValue;
             float minY = float.MaxValue;
 
-            foreach (State state in (from d in automaton.Drawables where (d is State) select d))
+            foreach (Drawable drawable in automaton.Drawables)
             {
-                if (state.Rectangle.X < minX)
+                PointF max = drawable.GetMaximum();
+                PointF min = drawable.GetMinimum();
+
+                if (min.X < minX)
                 {
-                    minX = state.Rectangle.X - 5;
+                    minX = min.X - 5;
                 }
 
-                if (state.Rectangle.Y < minY)
+                if (min.Y < minY)
                 {
-                    minY = state.Rectangle.Y - 5;
+                    minY = min.Y - 5;
                 }
 
-                if (state.Rectangle.X > maxX)
+                if (max.X > maxX)
                 {
-                    maxX = state.Rectangle.X + 5;
+                    maxX = max.X + 5;
                 }
 
-                if (state.Rectangle.Y > maxY)
+                if (max.Y > maxY)
                 {
-                    maxY = state.Rectangle.Y + 5;
+                    maxY = max.Y + 5;
                 }
             }
 
