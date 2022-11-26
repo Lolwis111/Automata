@@ -9,6 +9,7 @@ Visually design a finite state machine and test input strings against it.
 * transitions between states
 * evaluation (test strings for acceptance)
 * export as LaTeX
+  * tikz package is needed to compile the LaTeX
 * export as PNG
 * save/load as/from XML
 
@@ -19,7 +20,7 @@ Visually design a finite state machine and test input strings against it.
   * workaround: move around until no overlapping
 
 # Things that would be cool
-* label editor for transitions could be better (no intuitive what is valid or not)
+* label editor for transitions could be better (no intuitive sign what is valid or not)
 * make drawing process faster (tearing and stuff going on)
 * include minimization of state machine
 * calculate regular expression from state machine(?)
