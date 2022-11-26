@@ -24,3 +24,4 @@ Visually design a finite state machine and test input strings against it.
 * include minimization of state machine
 * calculate regular expression from state machine(?)
 * design automaton from regular expression(?)
+* given a word show the path it was processed on
