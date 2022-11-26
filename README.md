@@ -17,9 +17,10 @@ Visually design a finite state machine and test input strings against it.
   * workaround: no known fix, try reloading
 * bending angle of transitions not always nice
   * workaround: move around until no overlapping
-* cannot make states start/end once placed
-  * workaround: remove state and add state/end state
 
 # Things that would be cool
 * label editor for transitions could be better (no intuitive what is valid or not)
 * make drawing process faster (tearing and stuff going on)
+* include minimization of state machine
+* calculate regular expression from state machine(?)
+* design automaton from regular expression(?)
