@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml;
 using AutomataGUI.Model;
 using AutomataGUI.Properties;
@@ -34,7 +35,7 @@ namespace AutomataGUI.LoadSave
         {
             XmlDocument document = new XmlDocument();
             StateMachine dataManager = new StateMachine();
-            
+
             document.Load(path);
 
             if (!int.TryParse(document.SelectSingleNode(".//idx")?.InnerText, out int idx))

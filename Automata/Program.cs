@@ -49,9 +49,13 @@ namespace Automata
                     start = l.EndsWith("S");
 
                     if (end)
+                    {
                         _hasEnd = true;
+                    }
                     if (start)
+                    { 
                         _hasStart = true;
+                    }
 
                     Dictionary<char, string> conditions = new Dictionary<char, string>();
                     foreach (string c in conds)
@@ -79,7 +83,7 @@ namespace Automata
                     foreach (string name in state.Conditions.Values)
                     {
                         IEnumerable<State> a = from c in states where c.Name == name select c;
-                        if (a.Count() <= 0)
+                        if (!a.Any())
                             throw new Exception("Automat ist Fehlerhaft!");
                     }
                 }

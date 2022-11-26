@@ -1,11 +1,14 @@
 ﻿using AutomataGUI.Model;
 using System;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace AutomataGUI.View
 {
     public partial class SimulateWindow : Form
     {
+        public event WordSelectedHandler WordSelected;
+
         private StateMachine _stateMachine;
 
         public SimulateWindow(StateMachine stateMachine)
@@ -62,6 +65,14 @@ namespace AutomataGUI.View
         private void ButtonClear_Click(object sender, EventArgs e)
         {
             listViewResults.Items.Clear();
+        }
+
+        private void listViewResults_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(listViewResults.SelectedItems.Count > 0)
+            {
+                WordSelected?.Invoke(this, new WordSelectedEventArgs(listViewResults.SelectedItems[0].SubItems[0].Text));
+            }
         }
     }
 }

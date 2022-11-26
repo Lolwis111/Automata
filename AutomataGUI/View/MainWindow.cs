@@ -5,9 +5,9 @@ using System.Linq;
 using AutomataGUI.Model;
 using AutomataGUI.Properties;
 using AutomataGUI.LoadSave;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using AutomataGUI.Model.Exceptions;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace AutomataGUI.View
 {
@@ -345,7 +345,8 @@ namespace AutomataGUI.View
                 }
 
                 toolStripStatusLabelLeft.Text = "Loading...";
-                System.Threading.ThreadPool.QueueUserWorkItem(LoadAsync, openFileDialog.FileName);                    
+
+                LoadAsync(openFileDialog.FileName); 
             }
         }
 
@@ -730,6 +731,12 @@ namespace AutomataGUI.View
         {
             SimulateWindow window = new SimulateWindow(_manager);
             window.Show();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.ShowDialog();
         }
 
         #endregion

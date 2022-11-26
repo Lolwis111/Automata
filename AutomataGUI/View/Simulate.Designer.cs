@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimulateWindow));
             this.textBoxWord = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSimulate = new System.Windows.Forms.Button();
@@ -109,6 +110,7 @@
             this.listViewResults.TabIndex = 5;
             this.listViewResults.UseCompatibleStateImageBehavior = false;
             this.listViewResults.View = System.Windows.Forms.View.Details;
+            this.listViewResults.SelectedIndexChanged += new System.EventHandler(this.listViewResults_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -131,6 +133,8 @@
             this.Controls.Add(this.buttonSimulate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxWord);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SimulateWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Simulate";
