@@ -18,6 +18,8 @@ Visually design a finite state machine and test input strings against it.
   * workaround: no known fix, try reloading
 * bending angle of transitions not always nice
   * workaround: move around until no overlapping
+* No check if the drawn automata is actually a DFA
+  * A state can have to different outgoing transitions with the same letter
 
 # Things that would be cool
 * label editor for transitions could be better (no intuitive sign what is valid or not)
