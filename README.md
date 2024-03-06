@@ -12,6 +12,7 @@ Visually design a finite state machine and test input strings against it.
   * tikz package is needed to compile the LaTeX
 * export as PNG
 * save/load as/from XML
+* Works okay on Linux using Wine
 
 # Known Bugs/Problems
 * visual designer sometimes messes up rendering order
