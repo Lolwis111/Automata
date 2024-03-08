@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "qguiapplication": "cpp",
+        "qapplication": "cpp"
+    }
+}
